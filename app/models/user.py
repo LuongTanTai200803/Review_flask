@@ -8,6 +8,9 @@ class User(db.Model):
     username = db.Column(db.String(36), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
 
+    tasks = db.relationship("Task", back_populates="user", cascade="all, delete-orphan")
+    posts = db.relationship("Post", back_populates="user", cascade="all, delete-orphan")
+    
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 

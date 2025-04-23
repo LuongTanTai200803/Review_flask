@@ -5,6 +5,7 @@ from flask import Flask, Blueprint
 from .extensions import db, jwt, migrate
 from app.routes.auth import auth_bp
 from app.routes.task import task_bp
+from app.routes.post import post_bp
 
 def create_app():
     app = Flask(__name__)
@@ -19,6 +20,8 @@ def create_app():
     # Đăng ký blueprint
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(task_bp, url_prefix='/task')
+    app.register_blueprint(post_bp, url_prefix='/post')
+
     with app.app_context():
         db.create_all()
     return app
