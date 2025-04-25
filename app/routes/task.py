@@ -1,5 +1,7 @@
 
 from datetime import datetime
+import time
+from app.celery_worker import celery
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from app.extensions import db
@@ -105,3 +107,10 @@ def delete_task():
     db.session.delete(task)
     db.session.commit()
     return jsonify({"msg": "Task delete success"}), 200
+
+@celery.task
+def send_email(to_email, subject, body):
+    # Giả lập delay gửi email
+    time.sleep(5)
+    print(f"Sent email to {to_email} with subject '{subject}'")
+    return True

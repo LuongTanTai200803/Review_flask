@@ -6,6 +6,7 @@ from app.extensions import db
 from app.models.user import User
 from app.models.post import Post
 from app.routes import check_user
+from app.celery_worker import send_email
 
 post_bp = Blueprint("post", __name__)
 
@@ -25,6 +26,9 @@ def create_post():
 
     db.session.add(post)
     db.session.commit()
+    # Gửi email thông báo bất đồng bộ
+    send_email.delay('user@example.com', "New post created", 'This is test email')
+
     return jsonify({"msg": "Post created success"}), 201
 
 
@@ -34,21 +38,39 @@ def get_post():
     user_id = get_jwt_identity()
     check_user(user_id)
 
-    # Lấy tất cả post của user
-    posts = Post.query.filter_by(user_id=user_id).order_by(Post.id.asc()).all()
+    # Lấy tham số phân trang và tìm kiếm
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 5, type=int)
+    keyword = request.args.get('q', '', type=str)
+
     
-      # Chuyển đổi dữ liệu task
+    # Lấy post theo user
+    query = Post.query.filter_by(user_id=user_id).order_by(Post.id.desc())
+    
+    # Nếu có từ khóa tìm kiếm 
+    if keyword:
+        query = query.filter(Post.title.ilike(f"%{keyword}%"))
+
+    # Phân trang
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+
+    # Chuyển đổi dữ liệu task
     posts_data = [
         {
             "id": post.id,
             "title": post.title,
             "content": post.content,
-            "users_id": post.user_id,
+            "user_id": post.user_id,
         }
-        for post in posts
+        for post in pagination.items
     ]
 
-    return jsonify(posts_data), 200
+    return jsonify({
+        "post": posts_data,
+        "total": pagination.total,
+        "page": pagination.page,
+        "pages": pagination.pages
+    }), 200
 
 @post_bp.route('/<string:post_id>', methods=['PUT'])
 @jwt_required()
