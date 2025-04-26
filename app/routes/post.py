@@ -1,11 +1,11 @@
 from datetime import datetime
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
-from app.extensions import db
+from app.extensions import db, cache
 
 from app.models.user import User
 from app.models.post import Post
-from app.routes import check_user
+from app.routes import check_user, make_cache_key
 from app.celery_worker import send_email
 
 post_bp = Blueprint("post", __name__)
@@ -34,6 +34,7 @@ def create_post():
 
 @post_bp.route('/', methods=['GET'])
 @jwt_required()
+@cache.cached(timeout=60, key_prefix=make_cache_key)
 def get_post():
     user_id = get_jwt_identity()
     check_user(user_id)
