@@ -1,6 +1,10 @@
-from app import create_app
+from app import create_app, wait_for_db
+from app import setup_logging
+from app.extensions import db
 
+setup_logging()
 app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    wait_for_db(app, db) 
+    app.run(debug=True, use_reloader=False)

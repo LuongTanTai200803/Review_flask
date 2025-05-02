@@ -1,0 +1,28 @@
+2025-04-27 10:50:07,301 - INFO - werkzeug - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-04-27 10:50:07,301 - INFO - werkzeug - [33mPress CTRL+C to quit[0m
+2025-04-27 10:50:07,302 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 10:50:07,862 - WARNING - werkzeug -  * Debugger is active!
+2025-04-27 10:50:07,867 - INFO - werkzeug -  * Debugger PIN: 509-630-281
+2025-04-27 10:50:51,202 - INFO - werkzeug -  * Detected change in '/home/kaijuzz/Desktop/Review_Flask/app/__init__.py', reloading
+2025-04-27 10:50:51,343 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 10:50:51,889 - WARNING - werkzeug -  * Debugger is active!
+2025-04-27 10:50:51,891 - INFO - werkzeug -  * Debugger PIN: 509-630-281
+2025-04-27 10:51:16,775 - INFO - root - POST /auth/login 200 108ms IP:127.0.0.1 User:None
+2025-04-27 10:51:16,776 - INFO - werkzeug - 127.0.0.1 - - [27/Apr/2025 10:51:16] "POST /auth/login HTTP/1.1" 200 -
+2025-04-27 10:58:20,774 - INFO - root - GET /post/ 200 9ms IP:127.0.0.1 User:055cf2d2-eb8b-4aa5-a7b8-43f71733615d
+2025-04-27 10:58:20,775 - INFO - werkzeug - 127.0.0.1 - - [27/Apr/2025 10:58:20] "GET /post/?q=&page=1&per_page=5 HTTP/1.1" 200 -
+2025-04-27 11:23:22,145 - INFO - root - POST /auth/login 200 105ms IP:127.0.0.1 User:None
+2025-04-27 11:23:56,000 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 11:23:58,045 - INFO - root - POST /auth/login 200 108ms IP:127.0.0.1 User:None
+2025-04-27 11:24:02,609 - INFO - root - POST /auth/login 200 112ms IP:127.0.0.1 User:None
+2025-04-27 11:24:20,920 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 11:24:24,915 - INFO - root - POST /auth/login 200 118ms IP:127.0.0.1 User:None
+2025-04-27 11:24:27,727 - INFO - root - POST /auth/login 200 109ms IP:127.0.0.1 User:None
+2025-04-27 11:25:55,366 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 11:25:59,789 - INFO - root - POST /auth/login? 200 109ms IP:127.0.0.1 User:None
+2025-04-27 11:26:17,389 - INFO - root - GET /post/?q=&page=1&per_page=5 200 8ms IP:127.0.0.1 User:055cf2d2-eb8b-4aa5-a7b8-43f71733615d
+2025-04-27 11:26:35,348 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 11:36:33,727 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 17:26:30,841 - INFO - werkzeug -  * Restarting with stat
+2025-04-27 17:29:26,868 - INFO - werkzeug -  * Restarting with stat
