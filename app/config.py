@@ -23,6 +23,7 @@ class Config:
     CACHE_REDIS_URL = 'redis://localhost:6379/2'
     CACHE_DEFAULT_TIMEOUT = 30
 
-
+class Testing(Config):
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:3366@127.0.0.1:3306/review_test"
 class ProductingConfig(Config):
     SQLALCHEMY_DATABASE_URI = "mysql://root:GkyaiaZygsNgWYWusQUqLzzivDdxymzq@gondola.proxy.rlwy.net:49132/railway"  # Hoặc PostgreSQL test DB

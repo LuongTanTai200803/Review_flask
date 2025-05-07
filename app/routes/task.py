@@ -9,6 +9,9 @@ from app.models.task import Task
 from app.models.user import User
 
 task_bp = Blueprint("taks", __name__)
+import logging
+
+logger = logging.getLogger(__name__)  # __name__ tự động lấy tên module hiện tại
 
 @task_bp.route('/', methods=['POST'])
 @jwt_required()
@@ -67,25 +70,30 @@ def update_task():
     data = request.get_json()
 
     user = User.query.filter_by(id=user_id).first()
+    
     if not user:
-        return jsonify({"msg": "Not Found User"}), 400
+        logger.error(f"User with ID {user_id} not found")
+        return jsonify({"msg": "Not Found User"}), 404
     task_id = data['id']
 
     task = Task.query.filter_by(id=task_id).first()
 
-    task.title = data.get('title', task.title)
-    task.description = data.get('description', task.description)
-    task.status = data.get('status', task.status)
+    # task.title = data.get('title', task.title)
+    for field in ['title', 'description', 'status']:
+        if field in data:
+            setattr(task, field, data[field])
 
-    if data.get('due_date'):
-        try:
-            # Giả sử định dạng ngày bạn gửi là "YYYY-MM-DD"
-            task.due_date = datetime.strptime(data.get('due_date'), '%Y-%m-%d')
-        except ValueError:
-            return jsonify({"msg": "Invalid date format for due_date, expected YYYY-MM-DD"}), 400
-    elif data.get('due_date') is None:
-        task.due_date = None 
-
+    # Kiểm tra trường có gửi hay không
+    if 'due_date'in data:
+        if data.get('due_date') is None:
+            task.due_date = None 
+        else:
+            try:
+                # Parse đúng định dạng "YYYY-MM-DD"
+                task.due_date = datetime.strptime(data.get('due_date'), '%Y-%m-%d')
+            except ValueError:
+                return jsonify({"msg": "Invalid date format for due_date, expected YYYY-MM-DD"}), 400
+        
     db.session.commit()
     return jsonify({"msg": "Task update success"}), 200
 
@@ -102,15 +110,8 @@ def delete_task():
     task_id = data['id']
     task = Task.query.filter_by(id=task_id).first()
     if not task:
-        return jsonify({"msg": "User Not Found"}), 400
+        return jsonify({"msg": "Task Not Found"}), 400
     
     db.session.delete(task)
     db.session.commit()
     return jsonify({"msg": "Task delete success"}), 200
-
-@celery.task
-def send_email(to_email, subject, body):
-    # Giả lập delay gửi email
-    time.sleep(5)
-    print(f"Sent email to {to_email} with subject '{subject}'")
-    return True

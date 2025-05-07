@@ -5,6 +5,7 @@ from app.extensions import db
 setup_logging()
 app = create_app()
 
+
 if __name__ == '__main__':
     wait_for_db(app, db) 
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=True, use_reloader=True)
