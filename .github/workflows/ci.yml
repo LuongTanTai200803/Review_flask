@@ -13,7 +13,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+    - name: Clean up previous containerd packages
+      run: |
+        sudo apt-get remove --purge -y containerd containerd.io
+        sudo apt-get autoremove -y
+      
     - name: Set up Docker
       run: |
         sudo apt-get update
