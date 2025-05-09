@@ -6,7 +6,3 @@ Mysql.session.sql
 __pycache__/
 *.pyc
 
-tests/
-
-exceptions.py
-error_handler.py
