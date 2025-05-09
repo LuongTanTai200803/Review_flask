@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: occorps
+      JWT_SECRET_KEY: occorps
 
     services:
       mysql:
