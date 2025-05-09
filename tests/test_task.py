@@ -51,11 +51,23 @@ def test_update_task(client):
     #Lấy token từ response
     access_token = response.json['access_token']
 
+    # Tạo task trước
+    task_data = {
+        "title": "New Task",
+        "status": "Pending",
+        "due_date": "2025-5-10",
+        "description": "test lần 1"
+    }
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = client.post("/task/", json=task_data, headers=headers)
+    assert response.status_code == 201
+    task_id = response.json["task_id"]
+
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
     update_task = {
-        "id": "011f0fd0-aac1-4a72-b52c-97ce5bfe5e65",
+        "id": task_id,
         "due_date": None
     }
     response = client.put('/task/', json=update_task, headers=headers)
@@ -70,12 +82,23 @@ def test_delete_task(client):
     assert response.status_code == 200
     #Lấy token từ response
     access_token = response.json['access_token']
+    # Tạo task trước
+    task_data = {
+        "title": "New Task",
+        "status": "Pending",
+        "due_date": "2025-5-10",
+        "description": "test lần 1"
+    }
+    headers = {"Authorization": f"Bearer {access_token}"}
+    response = client.post("/task/", json=task_data, headers=headers)
+    assert response.status_code == 201
+    task_id = response.json["task_id"]
 
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
     data = {
-        "id": "09fd3e5c-a6a0-4555-ab26-24dcd2c0fdc7"
+        "id": task_id
     }
     del_response = client.delete('/task/', json = data, headers=headers)
     assert del_response.status_code == 400
