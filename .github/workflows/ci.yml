@@ -9,27 +9,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SECRET_KEY: occorps
-      JWT_SECRET_KEY: occorps
-
-    services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: 3366
-          MYSQL_DATABASE: review_test
-        options: >-
-          --health-cmd="mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Set up Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo apt-get install -y docker-compose
+
+    - name: Build and run Docker containers
+      run: |
+        docker-compose up -d
+
+    - name: Wait for services to be ready
+      run: |
+        sleep 10  # Đảm bảo các dịch vụ có thời gian để khởi động. Điều này có thể được thay bằng lệnh đợi thực tế hoặc healthcheck.
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -41,18 +38,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Wait for MySQL to be ready
-      run: |
-        for i in $(seq 1 30); do
-          if mysqladmin ping -h "127.0.0.1" --silent; then
-            echo "MySQL is ready!"
-            break
-          else
-            echo "Waiting for MySQL to be ready..."
-            sleep 5
-          fi
-        done
-
     - name: Run tests
       run: |
         pytest
+
+    - name: Tear down Docker containers
+      run: |
+        docker-compose down
