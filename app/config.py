@@ -25,5 +25,6 @@ class Config:
 
 class Testing(Config):
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:3366@127.0.0.1:3306/review_test"
+    CACHE_TYPE = 'SimpleCache'
 class ProductingConfig(Config):
     SQLALCHEMY_DATABASE_URI = "mysql://root:GkyaiaZygsNgWYWusQUqLzzivDdxymzq@gondola.proxy.rlwy.net:49132/railway"  # Hoặc PostgreSQL test DB
