@@ -34,11 +34,10 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      disable: true
-      # test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      # interval: 10s
-      # timeout: 5s
-      # retries: 3
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   redis:
     image: redis:7
