@@ -7,6 +7,7 @@ services:
     restart: always
     depends_on:
       - redis
+      - mysql
     ports:
       - "8000:8000"  # Dùng expose thay vì ports để tránh public
     env_file:
@@ -26,7 +27,7 @@ services:
     container_name: mysql_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 3366
+      MYSQL_ROOT_PASSWORD: "3366"
       MYSQL_DATABASE: review_test
     ports:
       - "3306:3306"
@@ -38,7 +39,7 @@ services:
       # interval: 10s
       # timeout: 5s
       # retries: 3
-      
+
   redis:
     image: redis:7
     container_name: redis_cache_v1
