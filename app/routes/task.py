@@ -33,7 +33,10 @@ def create_task():
 
     db.session.add(task)
     db.session.commit()
-    return jsonify({"msg": "Task created"}), 201
+    return jsonify({
+        "msg": "Task created",
+        "task_id": task.id 
+                    }), 201
 
 
 @task_bp.route('/', methods=['GET'])
