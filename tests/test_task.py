@@ -101,5 +101,5 @@ def test_delete_task(client):
         "id": task_id
     }
     del_response = client.delete('/task/', json = data, headers=headers)
-    assert del_response.status_code == 400
-    assert del_response.json["msg"] == "Task Not Found"
+    assert del_response.status_code == 200
+    assert del_response.json["msg"] == "Task delete success"

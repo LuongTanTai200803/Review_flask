@@ -50,16 +50,23 @@ def test_update_post(client):
     assert response.status_code == 200
     #Lấy token từ response
     access_token = response.json['access_token']
-
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
-    update_task = {
+    post_data = {
+        "title": "Chill",
+        "content": "Viết test integration"
+    }
+    create_response = client.post('/post/', json=post_data, headers=headers)
+    assert create_response.status_code == 201
+    post_id = response.json["post_id"]
+
+    update_post = {
         "title": "one"
     }
-    response = client.put('/post/2eefc2c5-6c47-494f-88b9-00bad307cda6', json=update_task, headers=headers)
-    assert response.status_code == 200
-    assert response.json["msg"] == "Post update success"
+    update_response = client.put(f'/post/{post_id}', json=update_post, headers=headers)
+    assert update_response.status_code == 200
+    assert update_response.json["msg"] == "Post update success"
 
 def test_delete_post(client):
     response = client.post('/auth/login', json={
@@ -91,7 +98,14 @@ def test_post_search_and_pagination(client):
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
-
+    # Tạo post
+    post_data = {
+        "title": "Chill",
+        "content": "Viết test integration"
+    }
+    create_response = client.post('/post/', json=post_data, headers=headers)
+    create_response = client.post('/post/', json=post_data, headers=headers)
+    assert create_response.status_code == 201
     # Thực hiện yêu cầu GET với search query và pagination
     response = client.get('/post/?q=Chill&page=1&per_page=1', headers=headers)
 
@@ -106,6 +120,7 @@ def test_post_search_and_pagination(client):
     assert data['pages'] == 2   # Số lượng page
 
     # Test phân trang
+    create_response = client.post('/post/', json=post_data, headers=headers)
     response = client.get('/post/', headers=headers, query_string={"q": "", "page": 1, "per_page": 2})
     assert response.status_code == 200
     data = response.json

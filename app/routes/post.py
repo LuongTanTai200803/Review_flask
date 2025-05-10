@@ -36,7 +36,10 @@ def create_post():
     # Gửi email thông báo bất đồng bộ
     #send_email.delay('user@example.com', "New post created", 'This is test email')
 
-    return jsonify({"msg": "Post created success"}), 201
+    return jsonify({
+        "msg": "Post created success",
+        "post_id": post.id
+        }), 201
 
 
 @post_bp.route('/', methods=['GET'])

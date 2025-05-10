@@ -3,7 +3,7 @@ def test_user_singup(client):
         "username": "newuser",
         "password": "password123"
     })
-    assert response.status_code == 400
+    assert response.status_code == 201
 
 def test_user_login(client):
     client.post('/auth/singup', json={
