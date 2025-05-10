@@ -6,7 +6,7 @@ from app.error_handler import register_error_handlers
 
 from .celery_worker import celery 
 from sqlalchemy import text
-from .config import Config, ProductingConfig, Testing
+from .config import Config, Production, Testing
 from flask import Flask, Blueprint
 from .extensions import db, jwt, migrate, cache, register_db_session_handlers
 from app.routes.auth import auth_bp
