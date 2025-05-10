@@ -93,7 +93,6 @@ def test_delete_task(client):
     response = client.post("/task/", json=task_data, headers=headers)
     assert response.status_code == 201
     task_id = response.json["task_id"]
-
     headers = {
         'Authorization': f'Bearer {access_token}'
     }

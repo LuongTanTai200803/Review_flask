@@ -2,6 +2,7 @@
 import pytest
 from app import create_app, celery  # app của bạn
 from app.extensions import db  # database của bạn
+from app.models.post import Post
 from app.models.user import User  # models của bạn
 
 
@@ -42,3 +43,9 @@ def authenticated_client(client, new_user):
     access_token = login_response.json['access_token']
     client.environ_base['HTTP_AUTHORIZATION'] = f'Bearer {access_token}'
     return client
+
+@pytest.fixture(autouse=True)
+def clear_posts():
+    yield  # Chạy test trước
+    Post.query.delete()
+    db.session.commit()

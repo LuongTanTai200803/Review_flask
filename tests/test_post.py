@@ -74,15 +74,13 @@ def test_delete_post(client):
     assert response.status_code == 200
     #Lấy token từ response
     access_token = response.json['access_token']
-
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
-
+    
     del_response = client.delete('/post/09fd3e5c-a6a0-4555-ab26-24dcd2c0fdc7', headers=headers)
     assert del_response.status_code == 404
     assert del_response.json["error"] == "Post Not Found"
-
 
 def test_post_search_and_pagination(client):
     response = client.post('/auth/login', json={
@@ -92,7 +90,6 @@ def test_post_search_and_pagination(client):
     assert response.status_code == 200
     #Lấy token từ response
     access_token = response.json['access_token']
-
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
@@ -101,11 +98,11 @@ def test_post_search_and_pagination(client):
         "title": "Chill",
         "content": "Viết test integration"
     }
-    create_response = client.post('/post/', json=post_data, headers=headers)
-    create_response = client.post('/post/', json=post_data, headers=headers)
+    create_response = client.post('/post/', json=post_data, headers=headers) # Tạo post thứ 1
+    create_response = client.post('/post/', json=post_data, headers=headers) # Tạo post thứ 2
     assert create_response.status_code == 201
     # Thực hiện yêu cầu GET với search query và pagination
-    response = client.get('/post/?q=Chill&page=1&per_page=1', headers=headers)
+    response = client.get('/post/?q=Chill&page=1&per_page=1', headers=headers) # Lấy post
 
     # Kiểm tra mã trạng thái
     assert response.status_code == 200
@@ -118,7 +115,7 @@ def test_post_search_and_pagination(client):
     assert data['pages'] == 2   # Số lượng page
 
     # Test phân trang
-    create_response = client.post('/post/', json=post_data, headers=headers)
+    create_response = client.post('/post/', json=post_data, headers=headers) # Tạo post thứ 3
     response = client.get('/post/', headers=headers, query_string={"q": "", "page": 1, "per_page": 2})
     assert response.status_code == 200
     data = response.json
