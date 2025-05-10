@@ -3,6 +3,7 @@ import pytest
 from app import create_app, celery  # app của bạn
 from app.extensions import db  # database của bạn
 from app.models.post import Post
+from app.models.task import Task
 from app.models.user import User  # models của bạn
 
 
@@ -36,18 +37,25 @@ def celery_worker(celery_app):
     return celery_app
  """
 @pytest.fixture
-def authenticated_client(client, new_user):
+def authenticated_client(client):
     """Đăng ký và đăng nhập, trả về client với token."""
-    client.post('/auth/signup', json={"email": new_user.email, "password": new_user.password})
-    login_response = client.post('/auth/login', json={"email": new_user.email, "password": new_user.password})
+    client.post('/auth/singup', json={
+        "username": "newuser",
+        "password": "password123"
+    })
+    login_response = client.post('/auth/login', json={
+        "username": "newuser",
+        "password": "password123"
+    })
     access_token = login_response.json['access_token']
     client.environ_base['HTTP_AUTHORIZATION'] = f'Bearer {access_token}'
-    return client
+    return client, access_token
 
 @pytest.fixture(autouse=True)
 def clear_posts(app):
     with app.app_context():
         yield
         Post.query.delete()
+        Task.query.delete()
         User.query.delete()
         db.session.commit()

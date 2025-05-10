@@ -1,11 +1,5 @@
-def test_create_post(client):
-    response = client.post('/auth/login', json={
-        "username": "newuser",
-        "password": "password123"
-    })
-    assert response.status_code == 200
-    #Lấy token từ response
-    access_token = response.json['access_token']
+def test_create_post(authenticated_client):
+    client, access_token = authenticated_client  # unpack
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
@@ -17,14 +11,8 @@ def test_create_post(client):
     assert create_response.status_code == 400
     assert create_response.json["msg"] == "Not Enough Data" 
 
-def test_get_post(client):
-    response = client.post('/auth/login', json={
-        "username": "newuser",
-        "password": "password123"
-    })
-    assert response.status_code == 200
-    #Lấy token từ response
-    access_token = response.json['access_token']
+def test_get_post(authenticated_client):
+    client, access_token = authenticated_client  # unpack
 
     headers = {
         'Authorization': f'Bearer {access_token}'
@@ -39,14 +27,8 @@ def test_get_post(client):
             assert "title" in post            # Mỗi post có title
             assert "content" in post      # Mỗi post có content
 
-def test_update_post(client):
-    response = client.post('/auth/login', json={
-        "username": "newuser",
-        "password": "password123"
-    })
-    assert response.status_code == 200
-    #Lấy token từ response
-    access_token = response.json['access_token']
+def test_update_post(authenticated_client):
+    client, access_token = authenticated_client  # unpack
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
@@ -66,14 +48,8 @@ def test_update_post(client):
     assert update_response.status_code == 200
     assert update_response.json["msg"] == "Post update success"
 
-def test_delete_post(client):
-    response = client.post('/auth/login', json={
-        "username": "newuser",
-        "password": "password123"
-    })
-    assert response.status_code == 200
-    #Lấy token từ response
-    access_token = response.json['access_token']
+def test_delete_post(authenticated_client):
+    client, access_token = authenticated_client  # unpack
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
@@ -82,14 +58,8 @@ def test_delete_post(client):
     assert del_response.status_code == 404
     assert del_response.json["error"] == "Post Not Found"
 
-def test_post_search_and_pagination(client):
-    response = client.post('/auth/login', json={
-        "username": "newuser",
-        "password": "password123"
-    })
-    assert response.status_code == 200
-    #Lấy token từ response
-    access_token = response.json['access_token']
+def test_post_search_and_pagination(authenticated_client):
+    client, access_token = authenticated_client  # unpack
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
