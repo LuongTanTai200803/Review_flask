@@ -22,8 +22,8 @@ def create_post():
     user_id = get_jwt_identity()
     user = check_user(user_id)
 
-    if not any(field in data and data[field].strip() for field in ['title', 'content']):
-        return jsonify({"msg": "At least one of title or content must be provided and not empty"}), 400
+    if not all(field in data for field in ['title', 'content']):
+        return jsonify({"msg": "Not Enough Data"}), 400
     
     post = Post(
         title = data['title'],

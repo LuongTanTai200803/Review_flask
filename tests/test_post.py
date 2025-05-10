@@ -6,19 +6,16 @@ def test_create_post(client):
     assert response.status_code == 200
     #Lấy token từ response
     access_token = response.json['access_token']
-
     headers = {
         'Authorization': f'Bearer {access_token}'
     }
-
     post_data = {
         #"title": "Chill",
         "content": "Viết test integration"
     }
-
     create_response = client.post('/post/', json=post_data, headers=headers)
     assert create_response.status_code == 400
-    assert create_response.json['msg'] == "Invalidated data" 
+    assert create_response.json["msg"] == "Not Enough Data" 
 
 def test_get_post(client):
     response = client.post('/auth/login', json={
@@ -58,7 +55,7 @@ def test_update_post(client):
         "content": "Viết test integration"
     }
     create_response = client.post('/post/', json=post_data, headers=headers)
-    print(create_response.json())
+    print(create_response.json)
     assert create_response.status_code == 201
     post_id = create_response.json["post_id"]
 
