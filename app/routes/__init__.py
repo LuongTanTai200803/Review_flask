@@ -6,7 +6,7 @@ from app.models.user import User
 def check_user(user_id):
     user = User.query.filter_by(id=user_id).first()
     if not user:
-        return jsonify({"msg": "Not User"}), 400
+        return jsonify({"msg": "Not Found User"}), 400
     return user
 # Tạo key theo params
 def make_cache_key(*args, **kwargs):

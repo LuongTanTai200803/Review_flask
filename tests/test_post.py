@@ -58,6 +58,7 @@ def test_update_post(client):
         "content": "Viết test integration"
     }
     create_response = client.post('/post/', json=post_data, headers=headers)
+    print(create_response.json())
     assert create_response.status_code == 201
     post_id = create_response.json["post_id"]
 
