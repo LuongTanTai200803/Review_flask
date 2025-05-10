@@ -59,7 +59,7 @@ def test_update_post(client):
     }
     create_response = client.post('/post/', json=post_data, headers=headers)
     assert create_response.status_code == 201
-    post_id = response.json["post_id"]
+    post_id = create_response.json["post_id"]
 
     update_post = {
         "title": "one"
