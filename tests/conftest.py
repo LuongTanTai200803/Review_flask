@@ -1,6 +1,7 @@
 
 import pytest
 from app import create_app, celery  # app của bạn
+from app.config import Testing
 from app.extensions import db  # database của bạn
 from app.models.post import Post
 from app.models.task import Task
@@ -9,7 +10,7 @@ from app.models.user import User  # models của bạn
 
 @pytest.fixture
 def app():
-    app = create_app()  # mode testing
+    app = create_app(config_class=Testing)  # mode testing
     with app.app_context():
         yield app
 

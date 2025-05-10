@@ -12,6 +12,7 @@ jobs:
     env:
       SECRET_KEY: occorps
       JWT_SECRET_KEY: occorps
+      SQLALCHEMY_DATABASE_URI: mysql+pymysql://root:3366@127.0.0.1/review_test  # Kết nối MySQL
 
     services:
       mysql:
@@ -29,10 +30,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
@@ -55,4 +56,4 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest
+        pytest --maxfail=1 --disable-warnings -q  # Tùy chọn để giảm chi tiết log
