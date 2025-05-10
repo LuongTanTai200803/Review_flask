@@ -49,4 +49,5 @@ def clear_posts(app):
     with app.app_context():
         yield
         Post.query.delete()
+        User.query.delete()
         db.session.commit()
