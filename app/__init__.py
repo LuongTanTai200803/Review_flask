@@ -18,7 +18,7 @@ from sqlalchemy.exc import OperationalError
 """ import pymysql
 pymysql.install_as_MySQLdb()
  """
-def create_app(config_class= Testing):
+def create_app(config_class= Config):
     app = Flask(__name__)
 
     # Load file cấu hình
