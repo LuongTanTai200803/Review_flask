@@ -45,7 +45,8 @@ def authenticated_client(client, new_user):
     return client
 
 @pytest.fixture(autouse=True)
-def clear_posts():
-    yield  # Chạy test trước
-    Post.query.delete()
-    db.session.commit()
+def clear_posts(app):
+    with app.app_context():
+        yield
+        Post.query.delete()
+        db.session.commit()
