@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 8000
 
 # Chạy ứng dụng Flask (4w, 2thread )
-CMD ["gunicorn", "--workers", "4", "--threads", "2", "--bind", "0.0.0.0:8000", "--log-level", "info", "--access-logfile", "-", "--error-logfile", "-", "--timeout", "60", "run:app"]
+CMD ["gunicorn", "--workers", "2", "--threads", "2", "--bind", "0.0.0.0:8000", "--log-level", "debug", "--access-logfile", "-", "--error-logfile", "-", "--timeout", "30", "run:app"]

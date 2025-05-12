@@ -40,10 +40,11 @@ def create_app(config_class= Config):
     app.register_blueprint(post_bp, url_prefix='/post')
 
     from flask import url_for
-
-    with app.app_context():
+    # Hiển thị các endpoint
+    """     with app.app_context():
         for rule in app.url_map.iter_rules():
-            print(f"{rule.methods} {rule.rule}")
+            print(f"{rule.methods} {rule.rule}") """
+    
     register_error_handlers(app)
     setup_request_logger(app)
     register_db_session_handlers(app)
