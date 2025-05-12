@@ -14,12 +14,14 @@ from app.routes.task import task_bp
 from app.routes.post import post_bp
 from app.log_request import setup_request_logger
 from sqlalchemy.exc import OperationalError
+from flask_cors import CORS
 
 """ import pymysql
 pymysql.install_as_MySQLdb()
  """
 def create_app(config_class= Config):
     app = Flask(__name__)
+    CORS(app)  # Cho phép CORS
 
     # Load file cấu hình
     app.config.from_object(config_class)
