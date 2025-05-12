@@ -23,6 +23,9 @@ def create_task():
     if not user:
         return jsonify({"msg": "Not User"}), 400
     
+    if not all(field in data for field in ['title', 'status']):
+        return jsonify({"msg": "Not Enough Data"}), 400
+    
     task = Task(
         title = data['title'],
         status = data['status'],

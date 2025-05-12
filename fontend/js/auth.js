@@ -23,7 +23,7 @@ form.addEventListener('submit', async (e) => {
         } else {
             console.error('Response status:', response.status); // thêm dòng này
             console.error('Response data:', data); // thêm dòng này
-            alert(data.msg || data.message || 'Login failed {response.status}');
+            alert(data.msg || data.message || 'Login failed ');
         }
     } catch (error) {
         console.error('Error:', error);
