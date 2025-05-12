@@ -21,7 +21,9 @@ form.addEventListener('submit', async (e) => {
             localStorage.setItem('token', data.access_token); // lưu token
             window.location.href = 'dashboard.html';   // chuyển trang
         } else {
-            alert(data.message || 'Login failed');
+            console.error('Response status:', response.status); // thêm dòng này
+            console.error('Response data:', data); // thêm dòng này
+            alert(data.msg || data.message || 'Login failed {response.status}');
         }
     } catch (error) {
         console.error('Error:', error);
