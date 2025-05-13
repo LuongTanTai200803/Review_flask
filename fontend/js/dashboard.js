@@ -27,7 +27,18 @@ async function fetchTasks() {
             if (Array.isArray(data.tasks) && data.tasks.length > 0) {
                 data.tasks.forEach(task => {
                     const li = document.createElement('li');
-                    li.textContent = task.title;
+
+                    const description = task.description ?? 'Không có mô tả';
+                    const due_date = task.due_date ? new Date(task.due_date).toLocaleString() : 'Không có ngày hết hạn';
+
+                    li.innerHTML =`
+                        <strong>Title:</strong> ${task.title}<br>
+                        <strong>Status:</strong> ${task.status}<br>
+                        <strong>Description:</strong> ${description}<br>
+                        <strong>Due Date:</strong> ${new Date(due_date).toLocaleString()}<br>
+                        <hr>
+                    `;
+
                     taskList.appendChild(li);
                 });
             } else {
