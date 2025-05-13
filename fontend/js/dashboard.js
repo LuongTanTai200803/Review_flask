@@ -18,14 +18,24 @@ async function fetchTasks() {
         });
 
         const data = await response.json();
+        console.log('Data from server:', data); // log ra xem
+
+        const taskList = document.getElementById('taskList');
+        taskList.innerHTML = ''; // clear taskList trước
 
         if (response.ok) {
-            const taskList = document.getElementById('taskList');
-            data.tasks.forEach(task => {
+            if (Array.isArray(data.tasks) && data.tasks.length > 0) {
+                data.tasks.forEach(task => {
+                    const li = document.createElement('li');
+                    li.textContent = task.title;
+                    taskList.appendChild(li);
+                });
+            } else {
+                // Không có task
                 const li = document.createElement('li');
-                li.textContent = task.title;
+                li.textContent = 'Không có task nào';
                 taskList.appendChild(li);
-            });
+            }
         } else {
             console.error('Response status:', response.status); // thêm dòng này
             console.error('Response data:', data); // thêm dòng này
