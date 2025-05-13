@@ -67,7 +67,7 @@ def get_task():
         for task in tasks
     ]
 
-    return jsonify(tasks_data), 200
+    return jsonify({"tasks": tasks_data}), 200
 
 @task_bp.route('/', methods=['PUT'])
 @jwt_required()
