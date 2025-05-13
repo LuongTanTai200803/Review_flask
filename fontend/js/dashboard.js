@@ -27,6 +27,8 @@ async function fetchTasks() {
                 taskList.appendChild(li);
             });
         } else {
+            console.error('Response status:', response.status); // thêm dòng này
+            console.error('Response data:', data); // thêm dòng này
             alert('Failed to load tasks');
         }
     } catch (error) {
