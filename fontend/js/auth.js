@@ -7,7 +7,7 @@ form.addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value;
 
     try {
-        const response = await fetch('https://reviewflask-secredkey.up.railway.app/auth/login', {
+        const response = await fetch('http://127.0.0.1:5000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,6 +27,6 @@ form.addEventListener('submit', async (e) => {
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Something went wrong!');
+        alert('Không thể kết nối tới server. Có thể server bị lỗi hoặc bạn đang offline.');
     }
 });

@@ -40,7 +40,7 @@ def register_error_handlers(app):
 
     @app.errorhandler(404)
     def not_found_error(error):
-        logging.warning("Not Found Error")
+        logging.warning("Not Found API")
         return jsonify({"error": "Không tìm thấy API"}), 404
 
     @app.errorhandler(Exception)

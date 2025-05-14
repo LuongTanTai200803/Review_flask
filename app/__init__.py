@@ -41,18 +41,18 @@ def create_app(config_class= Config):
 
     from flask import url_for
     # Hiển thị các endpoint
-    """     with app.app_context():
+    with app.app_context():
         for rule in app.url_map.iter_rules():
-            print(f"{rule.methods} {rule.rule}") """
+            print(f"{rule.methods} {rule.rule}")
     
     register_error_handlers(app)
     setup_request_logger(app)
     register_db_session_handlers(app)
     print(app.config['SQLALCHEMY_DATABASE_URI'])
     # Không khởi tạo ở create_app()
-    with app.app_context():
+    """ with app.app_context():
         if not os.getenv("TESTING"):
-            db.create_all()
+            db.create_all() """
     return app
 
 def setup_logging():
