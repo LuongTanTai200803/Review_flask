@@ -7,13 +7,17 @@ Mục tiêu: thực hành kiến trúc MVC, tổ chức mã sạch, quản lý d
 
 # Tính năng chính
 
-- CRUD bài đánh giá (Review)
+
 - Quản lý người dùng (Admin/User)
 - Đăng nhập / Đăng ký người dùng
-- Template HTML với Flask Jinja2 (basic UI)
+- CRUD task
+- Tìm kiếm & phân trang kết quả review
+- Unit test với Pytest
+- CI/CD với GitHub Actions
+- Deploy online bằng Railway
+- Template HTML (demo dự án)
 - Tổ chức project theo kiến trúc MVC
 - Container hóa bằng Docker
-- (Kế hoạch): JWT Auth, Pagination, Search, Test API
 
 ---
 
@@ -21,7 +25,7 @@ Mục tiêu: thực hành kiến trúc MVC, tổ chức mã sạch, quản lý d
 
 - **Backend**: Flask, SQLAlchemy, Flask-Login, Flask-WTF  
 - **Database**: MySQL  
-- **Template**: Jinja2  
+- **Test**: Pytest  
 - **DevOps**: Docker, dotenv  
 - **IDE**: VSCode  
 
